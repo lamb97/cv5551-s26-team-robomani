@@ -1,0 +1,33 @@
+name: demo_xyz_image
+
+image_shape: &image_shape [3, 240, 320]
+dataset_path: ${oc.env:HOME}/demos
+exclude_first_n_demos: 4
+
+shape_meta: &shape_meta
+  obs:
+    image:
+      shape: *image_shape
+      type: rgb
+    eef_xyz:
+      shape: [3]
+      type: low_dim
+  action:
+    shape: [3]
+
+env_runner:
+  _target_: diffusion_policy.env_runner.real_pusht_image_runner.RealPushTImageRunner
+
+dataset:
+  _target_: diffusion_policy.dataset.demo_xyz_image_dataset.DemoXYZImageDataset
+  dataset_path: ${task.dataset_path}
+  shape_meta: *shape_meta
+  horizon: ${horizon}
+  pad_before: ${eval:'${n_obs_steps}-1'}
+  pad_after: ${eval:'${n_action_steps}-1'}
+  n_obs_steps: ${dataset_obs_steps}
+  exclude_first_n_demos: ${task.exclude_first_n_demos}
+  action_source: state_delta
+  seed: 42
+  val_ratio: 0.05
+  max_train_episodes: null
