@@ -11,7 +11,7 @@ improves planning efficiency over standard CEM-based planning.
 
 - Encode current and goal images using frozen DINOv2 features
 - Predict future latent states using DINO-WM under sampled action sequences
-- Optimize action sequences with Cross-Entropy Method (CEM)[2] using predicted goal distance as the objective
+- Optimize action sequences with Cross-Entropy Method (CEM) using predicted goal distance as the objective
 - Compare standard Gaussian CEM vs. diffusion-policy guided CEM
 - Execute the best first action and replan at the next step
 
